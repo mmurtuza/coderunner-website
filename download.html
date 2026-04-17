@@ -270,23 +270,29 @@
         <div class="alt-downloads">
             <h3>Alternative Downloads</h3>
             <div class="platforms">
-                <a href="downloads/macos/dmg/CodeRunner_1.0.0_aarch64.dmg" class="platform-link" id="link-mac">
+                <a href="release/v1.0.0/macos/dmg/CodeRunner_1.0.0_aarch64.dmg" class="platform-link" id="link-mac">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 1.44C9.64 6.44 7.75 5 5.8 5 2.75 5 0 7.56 0 12c0 4.11 3 10 6 10 1.3 0 2.75-1.06 4-1.06 1.15 0 2 1 2 1Z"></path>
                     </svg>
                     macOS (Apple Silicon / Intel)
                 </a>
-                <a href="downloads/windows/nsis/CodeRunner_1.0.0_x64-setup.exe" class="platform-link" id="link-win">
+                <a href="release/v1.0.0/windows/nsis/CodeRunner_1.0.0_x64-setup.exe" class="platform-link" id="link-win">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 12h8v8H3z"></path><path d="M3 3h8v8H3z"></path><path d="M13 3h8v8h-8z"></path><path d="M13 13h8v8h-8z"></path>
                     </svg>
                     Windows (.exe)
                 </a>
-                <a href="#" class="platform-link" id="link-linux">
+                <a href="release/v1.0.0/linux/deb/CodeRunner_1.0.0_arm64.deb" class="platform-link" id="link-linux-deb">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 2A10 10 0 1 0 22 12 10 10 0 0 0 12 2z"></path><path d="M12 6a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"></path>
                     </svg>
-                    Linux (AppImage / DEB)
+                    Linux (.deb)
+                </a>
+                <a href="release/v1.0.0/linux/rpm/CodeRunner-1.0.0-1.aarch64.rpm" class="platform-link" id="link-linux-rpm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2A10 10 0 1 0 22 12 10 10 0 0 0 12 2z"></path><path d="M12 6a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"></path>
+                    </svg>
+                    Linux (.rpm)
                 </a>
             </div>
         </div>
@@ -305,9 +311,9 @@
             const userAgent = navigator.userAgent.toLowerCase();
 
             const downloads = {
-                mac:     'downloads/macos/dmg/CodeRunner_1.0.0_aarch64.dmg',
-                windows: 'downloads/windows/nsis/CodeRunner_1.0.0_x64-setup.exe',
-                linux:   '#'
+                mac:     'release/v1.0.0/macos/dmg/CodeRunner_1.0.0_aarch64.dmg',
+                windows: 'release/v1.0.0/windows/nsis/CodeRunner_1.0.0_x64-setup.exe',
+                linux:   'release/v1.0.0/linux/deb/CodeRunner_1.0.0_arm64.deb'
             };
 
             const btn = document.getElementById('main-download-btn');

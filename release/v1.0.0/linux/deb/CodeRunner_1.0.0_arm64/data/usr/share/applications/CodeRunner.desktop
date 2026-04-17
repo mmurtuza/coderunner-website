@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=
+Exec=CodeRunner
+StartupWMClass=CodeRunner
+Icon=CodeRunner
+Name=CodeRunner
+Terminal=false
+Type=Application

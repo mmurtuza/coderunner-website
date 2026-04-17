@@ -1,0 +1,9 @@
+Package: code-runner
+Version: 1.0.0
+Architecture: arm64
+Installed-Size: 29635
+Maintainer: coderunner
+Priority: optional
+Depends: libwebkit2gtk-4.1-0, libgtk-3-0
+Description: (none)
+ (none)
