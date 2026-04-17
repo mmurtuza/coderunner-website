@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download CodeRunner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-gray: #888888;
+            --border-color: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand span {
+            color: var(--accent-gray);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--accent-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-color);
+        }
+
+        /* Main Download Area */
+        .download-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .download-container h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .download-container p {
+            color: var(--accent-gray);
+            font-size: 1.2rem;
+            max-width: 500px;
+            margin-bottom: 3rem;
+        }
+
+        .btn-download {
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 1.5rem 3rem;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            border: 2px solid var(--text-color);
+            transition: all 0.3s ease;
+            margin-bottom: 3rem;
+            min-width: 350px;
+            justify-content: center;
+        }
+
+        .btn-download:hover {
+            background: transparent;
+            color: var(--text-color);
+        }
+
+        /* Alternative Downloads */
+        .alt-downloads {
+            border-top: 1px solid var(--border-color);
+            padding-top: 3rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .alt-downloads h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .platform-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-gray);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .platform-link:hover {
+            color: var(--text-color);
+            border-color: var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .platform-link svg {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 4rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--accent-gray);
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 1rem;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1.5rem 2rem; flex-direction: column; gap: 1.5rem; }
+            .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+            .download-container h1 { font-size: 2.5rem; }
+            .btn-download { min-width: 280px; padding: 1.2rem 2rem; font-size: 1rem; }
+            .platforms { flex-direction: column; gap: 1rem; }
+            footer { flex-direction: column; gap: 1rem; padding: 2rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            Code<span>Runner</span>
+        </a>
+        <div class="nav-links">
+            <a href="docs/index.html">Documentation</a>
+            <a href="https://github.com/mmurtuza">GitHub</a>
+            <a href="https://murtuza.dev">Murtuza.dev</a>
+        </div>
+    </nav>
+
+    <div class="download-container">
+        <h1>Get CodeRunner</h1>
+        <p>A fast, local, and secure code execution environment built for precision and stability.</p>
+
+        <a href="#" id="main-download-btn" class="btn-download">
+            <span>Download</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </a>
+
+        <div class="alt-downloads">
+            <h3>Alternative Downloads</h3>
+            <div class="platforms">
+                <a href="downloads/macos/dmg/CodeRunner_1.0.0_aarch64.dmg" class="platform-link" id="link-mac">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 1.44C9.64 6.44 7.75 5 5.8 5 2.75 5 0 7.56 0 12c0 4.11 3 10 6 10 1.3 0 2.75-1.06 4-1.06 1.15 0 2 1 2 1Z"></path>
+                    </svg>
+                    macOS (Apple Silicon / Intel)
+                </a>
+                <a href="downloads/windows/nsis/CodeRunner_1.0.0_x64-setup.exe" class="platform-link" id="link-win">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12h8v8H3z"></path><path d="M3 3h8v8H3z"></path><path d="M13 3h8v8h-8z"></path><path d="M13 13h8v8h-8z"></path>
+                    </svg>
+                    Windows (.exe)
+                </a>
+                <a href="#" class="platform-link" id="link-linux">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2A10 10 0 1 0 22 12 10 10 0 0 0 12 2z"></path><path d="M12 6a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"></path>
+                    </svg>
+                    Linux (AppImage / DEB)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>&copy; 2026 Md Murtuza Hussain</div>
+        <div>
+            Engineered by <a href="https://murtuza.dev">Murtuza.dev</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const platform = navigator.platform.toLowerCase();
+            const userAgent = navigator.userAgent.toLowerCase();
+
+            const downloads = {
+                mac:     'downloads/macos/dmg/CodeRunner_1.0.0_aarch64.dmg',
+                windows: 'downloads/windows/nsis/CodeRunner_1.0.0_x64-setup.exe',
+                linux:   '#'
+            };
+
+            const btn = document.getElementById('main-download-btn');
+
+            if (platform.includes('mac') || userAgent.includes('mac')) {
+                btn.querySelector('span').textContent = 'Download for macOS';
+                btn.href = downloads.mac;
+            } else if (platform.includes('win') || userAgent.includes('windows')) {
+                btn.querySelector('span').textContent = 'Download for Windows';
+                btn.href = downloads.windows;
+            } else if (platform.includes('linux') || userAgent.includes('linux')) {
+                btn.querySelector('span').textContent = 'Download for Linux';
+                btn.href = downloads.linux;
+            } else {
+                btn.querySelector('span').textContent = 'Download CodeRunner';
+                btn.href = downloads.windows; // default fallback
+            }
+        });
+    </script>
+</body>
+</html>

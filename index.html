@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeRunner — Laravel & PHP Code Execution Engine</title>
+    <meta name="description" content="A precision-engineered desktop application for running PHP and Laravel code locally. Built for backend engineers who demand speed and reliability.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,800;0,900;1,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030303;
+            --surface: #0d0d0d;
+            --border: #1f1f1f;
+            --border-bright: #333;
+            --text: #ffffff;
+            --muted: #666;
+            --subtitle: #999;
+            --accent: #e8e8e8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── BETA BANNER ─── */
+        .beta-banner {
+            background: #111;
+            border-bottom: 1px solid var(--border-bright);
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--subtitle);
+        }
+
+        .beta-tag {
+            background: #fff;
+            color: #000;
+            padding: 0.15rem 0.5rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .beta-banner a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-bright);
+            transition: border-color 0.2s;
+        }
+        .beta-banner a:hover { border-color: var(--text); }
+
+        /* ─── NAV ─── */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 4rem;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(3, 3, 3, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+        .brand span { color: var(--muted); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--subtitle);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+
+        .btn-nav {
+            background: var(--text);
+            color: var(--bg);
+            padding: 0.55rem 1.2rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--text);
+            transition: all 0.25s;
+        }
+        .btn-nav:hover { background: transparent; color: var(--text); }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 7rem 4rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: var(--muted);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero h1 .line-muted {
+            color: var(--muted);
+            display: block;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: -2px;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--subtitle);
+            max-width: 520px;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--text);
+            color: var(--bg);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--text);
+            transition: all 0.25s;
+        }
+        .btn-primary:hover { background: transparent; color: var(--text); }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--subtitle);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--border-bright);
+            transition: all 0.25s;
+        }
+        .btn-secondary:hover { color: var(--text); border-color: var(--text); }
+
+        /* ─── APP SCREENSHOT ─── */
+        .screenshot-wrap {
+            max-width: 1100px;
+            margin: 4rem auto 0;
+            padding: 0 4rem;
+            position: relative;
+        }
+
+        .screenshot-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -60px;
+            background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .screenshot-frame {
+            border: 1px solid var(--border-bright);
+            background: var(--surface);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screenshot-titlebar {
+            background: #111;
+            padding: 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        .screenshot-frame img {
+            width: 100%;
+            display: block;
+            opacity: 0.92;
+        }
+
+        /* ─── DIVIDER ─── */
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0;
+        }
+
+        /* ─── STATS STRIP ─── */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            padding: 2.5rem 4rem;
+            border-right: 1px solid var(--border);
+        }
+        .stat-item:last-child { border-right: none; }
+
+        .stat-num {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ─── FEATURES ─── */
+        .features-section {
+            padding: 6rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: var(--muted);
+        }
+
+        .features-header {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            margin-bottom: 4rem;
+            line-height: 1.1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            transition: background 0.3s;
+        }
+        .feature-card:hover { background: rgba(255,255,255,0.02); }
+        .feature-card:nth-child(2n) { border-right: none; }
+        .feature-card:nth-last-child(-n+2) { border-bottom: none; }
+
+        .feature-icon {
+            width: 38px;
+            height: 38px;
+            border: 1px solid var(--border-bright);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--subtitle);
+        }
+
+        .feature-card h3 {
+            font-size: 0.95rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--subtitle);
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* ─── CTA ─── */
+        .cta-section {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 6rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .cta-section p {
+            color: var(--subtitle);
+            font-size: 1rem;
+            max-width: 480px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        footer a {
+            color: var(--subtitle);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        footer a:hover { color: var(--text); }
+
+        .footer-links { display: flex; gap: 2rem; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            nav { padding: 1.2rem 2rem; gap: 1rem; }
+            .hero { padding: 4rem 2rem 3rem; }
+            .screenshot-wrap { padding: 0 2rem; }
+            .stats-strip { grid-template-columns: 1fr; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+            .stat-item:last-child { border-bottom: none; }
+            .features-section { padding: 4rem 2rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .feature-card { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
+            .feature-card:last-child { border-bottom: none !important; }
+            .cta-section { padding: 4rem 2rem; }
+            footer { flex-direction: column; gap: 1.5rem; padding: 2rem; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+        }
+
+        @media (max-width: 600px) {
+            nav { flex-wrap: wrap; }
+            .nav-links { display: none; }
+            .hero h1 { letter-spacing: -2px; }
+            .stat-item { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Beta Banner -->
+    <div class="beta-banner">
+        <span class="beta-tag">Beta</span>
+        CodeRunner is currently in public beta. Expect sharp edges. &nbsp;
+        <a href="https://github.com/mmurtuza" target="_blank">Report an issue on GitHub →</a>
+    </div>
+
+    <!-- Nav -->
+    <nav>
+        <a href="index.html" class="brand">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            Code<span>Runner</span>
+        </a>
+        <div class="nav-links">
+            <a href="docs/index.html">Docs</a>
+            <a href="https://github.com/mmurtuza" target="_blank">GitHub</a>
+            <a href="https://murtuza.dev" target="_blank">Murtuza.dev</a>
+        </div>
+        <a href="download.html" class="btn-nav">Download</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-eyebrow">v1.0 Beta — PHP &amp; Laravel Execution Engine</div>
+        <h1>
+            Built for<br>
+            <span class="line-muted">precision.</span>
+        </h1>
+        <p class="hero-desc">
+            A desktop-native code runner architected for PHP and Laravel engineers. No browser overhead, no cloud latency — just raw execution speed, locally.
+        </p>
+        <div class="hero-actions">
+            <a href="download.html" class="btn-primary">
+                Download Free
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </a>
+            <a href="docs/index.html" class="btn-secondary">Read the Docs</a>
+        </div>
+    </section>
+
+    <!-- App Screenshot -->
+    <div class="screenshot-wrap">
+        <div class="screenshot-frame">
+            <div class="screenshot-titlebar">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <img src="img/coderunner-main.png" alt="CodeRunner application UI showing the PHP code editor and execution panel">
+        </div>
+    </div>
+
+    <hr class="section-divider" style="margin-top: 5rem;">
+
+    <!-- Stats Strip -->
+    <div class="stats-strip">
+        <div class="stat-item">
+            <div class="stat-num">PHP</div>
+            <div class="stat-label">Primary Language</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">Local</div>
+            <div class="stat-label">Execution — No Cloud</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">Laravel</div>
+            <div class="stat-label">First-Class Support</div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="features-section">
+        <div class="section-label">What's inside</div>
+        <h2 class="features-header">Component<br>Specs</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                </div>
+                <h3>Laravel Tinker Mode</h3>
+                <p>Auto-detects Laravel projects via the <code style="font-size:0.8em;color:#aaa">artisan</code> file. Bootstraps the full application context so your code runs inside the framework, not beside it.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <h3>Monaco Code Editor</h3>
+                <p>Powered by the same engine as VS Code. Full PHP syntax highlighting, bracket matching, and multi-cursor editing built in from day one.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                </div>
+                <h3>SQL Runner</h3>
+                <p>Write and execute raw SQL queries against your project's database connection. Results render in a reactive, sortable table view.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <h3>Live Log Viewer</h3>
+                <p>Real-time tail of <code style="font-size:0.8em;color:#aaa">storage/logs/laravel.log</code>. Streaming updates as your application writes them, without refreshing.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <h3>SSH &amp; Docker</h3>
+                <p>Connect to remote PHP environments over SSH or run code inside Docker containers. The exact same editor interface for local and remote execution.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path></svg>
+                </div>
+                <h3>Hybrid IntelliSense</h3>
+                <p>LSP-driven Eloquent model autocompletion backed by a Rust symbol indexer. Completions that know your schema, not just the PHP spec.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="section-label" style="justify-content:center;">Get started</div>
+        <h2>Ship faster.<br>Debug smarter.</h2>
+        <p>Available for macOS &amp; Windows. Free during public beta.</p>
+        <div class="hero-actions">
+            <a href="download.html" class="btn-primary">
+                Download CodeRunner
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </a>
+            <a href="docs/index.html" class="btn-secondary">Browse Docs</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div>&copy; 2026 Md Murtuza Hussain</div>
+        <div class="footer-links">
+            <a href="docs/index.html">Documentation</a>
+            <a href="https://github.com/mmurtuza" target="_blank">GitHub</a>
+            <a href="https://murtuza.dev" target="_blank">Murtuza.dev</a>
+        </div>
+    </footer>
+
+</body>
+</html>
